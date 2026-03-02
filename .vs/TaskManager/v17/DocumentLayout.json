@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\user1\\Desktop\\TaskManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|c:\\users\\user1\\desktop\\taskmanager\\taskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|solutionrelative:taskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|c:\\users\\user1\\desktop\\taskmanager\\taskmanager\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|solutionrelative:taskmanager\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|c:\\users\\user1\\desktop\\taskmanager\\taskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|solutionrelative:taskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BCD990C5-97BF-457D-B386-BC48E45ABA41}|TaskManager\\TaskManager.csproj|c:\\users\\user1\\desktop\\taskmanager\\taskmanager\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,13 +38,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Logger.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\TaskManager\\TaskManager\\Logger.cs",
               "RelativeDocumentMoniker": "TaskManager\\Logger.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\TaskManager\\TaskManager\\Logger.cs",
               "RelativeToolTip": "TaskManager\\Logger.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-19T09:31:14.795Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "TaskManager\\TaskManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T09:31:06.364Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-19T09:31:06.364Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "TaskManager\\TaskManager.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-19T09:26:56.64Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-19T09:26:56.64Z"
             },
             {
               "$type": "Document",
@@ -85,18 +83,17 @@
               "RelativeToolTip": "TaskManager\\Task.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T09:26:50.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-19T09:26:50.277Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\TaskManager\\TaskManager\\Program.cs",
               "RelativeDocumentMoniker": "TaskManager\\Program.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\TaskManager\\TaskManager\\Program.cs",
               "RelativeToolTip": "TaskManager\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-19T09:25:36.14Z",
               "EditorCaption": ""
