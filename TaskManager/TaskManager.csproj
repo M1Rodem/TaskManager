@@ -5,4 +5,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="Serilog" Version="4.1.0" />
+	  <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+	  <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+	</ItemGroup>
 </Project>

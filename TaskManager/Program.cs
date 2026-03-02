@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 
 namespace TaskManager
 {
@@ -9,7 +10,7 @@ namespace TaskManager
             var logger = new Logger();
             var taskManager = new TaskManager();
 
-            logger.Info("TaskManager запущен");
+            Log.Information("TaskManager запущен");
 
             Console.WriteLine("=== TASK MANAGER ===");
 
@@ -20,7 +21,7 @@ namespace TaskManager
                 Console.Write("Выберите действие (1-4): ");
 
                 string input = Console.ReadLine()?.Trim() ?? "";
-                logger.Trace($"Пользователь ввел: {input}");
+                Log.Debug($"Пользователь ввел: {input}");
 
                 switch (input)
                 {
@@ -34,18 +35,21 @@ namespace TaskManager
                         ListTasks(taskManager, logger);
                         break;
                     case "4":
-                        logger.Info("Приложение завершает работу");
+                        Log.Information("Приложение завершает работу");
                         Console.WriteLine("Выход...");
                         isRunning = false;
                         break;
                     default:
                         Console.WriteLine("Неверный выбор. Введите число от 1 до 4.");
-                        logger.Warning($"Неверный ввод: {input}");
+                        Log.Warning($"Неверный ввод: {input}");
                         break;
                 }
             }
 
-            logger.Close();
+            // 3. Завершаем работу логера
+            Log.CloseAndFlush();
+            Console.WriteLine("Нажмите любую клавишу для выхода...");
+            Console.ReadKey();
         }
 
         static void ShowMenu()
@@ -59,7 +63,7 @@ namespace TaskManager
 
         static void AddTask(TaskManager taskManager, Logger logger)
         {
-            logger.Trace("Начало операции AddTask");
+            Log.Debug("Начало операции AddTask");
 
             Console.Write("Введите название задачи: ");
             string title = Console.ReadLine()?.Trim() ?? "";
@@ -67,20 +71,20 @@ namespace TaskManager
             if (string.IsNullOrWhiteSpace(title))
             {
                 Console.WriteLine("Ошибка: название задачи не может быть пустым!");
-                logger.Warning("Попытка добавить задачу с пустым названием");
-                logger.Trace("Конец операции AddTask (неудача)");
+                Log.Debug("Конец операции AddTask (неудача)");
+                Log.Warning("Попытка добавить задачу с пустым названием"); ;
                 return;
             }
 
             taskManager.AddTask(title);
             Console.WriteLine($"Задача '{title}' добавлена.");
-            logger.Info($"Задача '{title}' добавлена");
-            logger.Trace("Конец операции AddTask (успех)");
+            Log.Debug("Конец операции AddTask (успех)");
+            Log.Information($"Задача '{title}' добавлена");
         }
 
         static void RemoveTask(TaskManager taskManager, Logger logger)
         {
-            logger.Trace("Начало операции RemoveTask");
+            Log.Debug("Начало операции RemoveTask");
 
             Console.Write("Введите название задачи для удаления: ");
             string title = Console.ReadLine()?.Trim() ?? "";
@@ -88,35 +92,35 @@ namespace TaskManager
             if (string.IsNullOrWhiteSpace(title))
             {
                 Console.WriteLine("Ошибка: название не может быть пустым!");
-                logger.Warning("Попытка удалить задачу с пустым названием");
-                logger.Trace("Конец операции RemoveTask (неудача)");
+                Log.Warning("Конец операции RemoveTask (неудача)");
+                Log.Information("Приложение запущено (Information).");
                 return;
             }
 
             if (taskManager.RemoveTask(title))
             {
                 Console.WriteLine($"Задача '{title}' удалена.");
-                logger.Info($"Задача '{title}' удалена");
-                logger.Trace("Конец операции RemoveTask (успех)");
+                Log.Information($"Задача '{title}' удалена");
+                Log.Debug("Конец операции RemoveTask (успех)");
             }
             else
             {
                 Console.WriteLine($"Задача '{title}' не найдена.");
-                logger.Error($"Задача '{title}' не найдена для удаления");
-                logger.Trace("Конец операции RemoveTask (неудача)");
+                Log.Error($"Задача '{title}' не найдена для удаления");
+                Log.Debug("Конец операции RemoveTask (неудача)");
             }
         }
 
         static void ListTasks(TaskManager taskManager, Logger logger)
         {
-            logger.Trace("Начало операции ListTasks");
+            Log.Debug("Начало операции ListTasks");
 
             var tasks = taskManager.GetTasks();
 
             if (tasks.Count == 0)
             {
                 Console.WriteLine("Список задач пуст.");
-                logger.Info("Список задач пуст");
+                Log.Information("Список задач пуст");
             }
             else
             {
@@ -126,10 +130,9 @@ namespace TaskManager
                     Console.WriteLine($"{i + 1}. {tasks[i].Title}");
                 }
                 Console.WriteLine($"Всего задач: {tasks.Count}");
-                logger.Info($"Выведено {tasks.Count} задач");
+                Log.Information($"Выведено {tasks.Count} задач");
             }
-
-            logger.Trace("Конец операции ListTasks");
+            Log.Debug("Конец операции ListTasks");
         }
     }
 }
