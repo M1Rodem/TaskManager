@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using System;
+using System.Diagnostics;
 
 namespace TaskManager
 {
@@ -8,6 +9,7 @@ namespace TaskManager
         static void Main(string[] args)
         {
             var logger = new Logger();
+
             var taskManager = new TaskManager();
 
             Log.Information("TaskManager запущен");
@@ -26,13 +28,13 @@ namespace TaskManager
                 switch (input)
                 {
                     case "1":
-                        AddTask(taskManager, logger);
+                        AddTask(taskManager);
                         break;
                     case "2":
-                        RemoveTask(taskManager, logger);
+                        RemoveTask(taskManager);
                         break;
                     case "3":
-                        ListTasks(taskManager, logger);
+                        ListTasks(taskManager);
                         break;
                     case "4":
                         Log.Information("Приложение завершает работу");
@@ -46,7 +48,6 @@ namespace TaskManager
                 }
             }
 
-            // 3. Завершаем работу логера
             Log.CloseAndFlush();
             Console.WriteLine("Нажмите любую клавишу для выхода...");
             Console.ReadKey();
@@ -61,7 +62,7 @@ namespace TaskManager
             Console.WriteLine("4. Выход");
         }
 
-        static void AddTask(TaskManager taskManager, Logger logger)
+        static void AddTask(TaskManager taskManager)
         {
             Log.Debug("Начало операции AddTask");
 
@@ -71,18 +72,18 @@ namespace TaskManager
             if (string.IsNullOrWhiteSpace(title))
             {
                 Console.WriteLine("Ошибка: название задачи не может быть пустым!");
+                Log.Warning("Попытка добавить задачу с пустым названием");
                 Log.Debug("Конец операции AddTask (неудача)");
-                Log.Warning("Попытка добавить задачу с пустым названием"); ;
                 return;
             }
 
             taskManager.AddTask(title);
             Console.WriteLine($"Задача '{title}' добавлена.");
-            Log.Debug("Конец операции AddTask (успех)");
             Log.Information($"Задача '{title}' добавлена");
+            Log.Debug("Конец операции AddTask (успех)");
         }
 
-        static void RemoveTask(TaskManager taskManager, Logger logger)
+        static void RemoveTask(TaskManager taskManager)
         {
             Log.Debug("Начало операции RemoveTask");
 
@@ -93,7 +94,6 @@ namespace TaskManager
             {
                 Console.WriteLine("Ошибка: название не может быть пустым!");
                 Log.Warning("Конец операции RemoveTask (неудача)");
-                Log.Information("Приложение запущено (Information).");
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace TaskManager
             }
         }
 
-        static void ListTasks(TaskManager taskManager, Logger logger)
+        static void ListTasks(TaskManager taskManager)
         {
             Log.Debug("Начало операции ListTasks");
 
