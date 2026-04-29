@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -10,6 +11,15 @@ namespace TaskManager
 
         public void AddTask(string title)
         {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Название задачи не может быть пустым или состоять только из пробелов", nameof(title));
+
+            if (title.Length > 100)
+                throw new ArgumentException("Название задачи не может превышать 100 символов", nameof(title));
+
+            if (tasks.Any(t => t.Title.Equals(title, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException($"Задача с названием '{title}' уже существует");
+
             Stopwatch sw = Stopwatch.StartNew();
 
             Tracer.TaskManagerTrace.TraceEvent(TraceEventType.Information, 0, $"Начало AddTask: '{title}'");
@@ -27,16 +37,11 @@ namespace TaskManager
 
         public bool RemoveTask(string title)
         {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Название задачи не может быть пустым или состоять только из пробелов", nameof(title));
+
             Stopwatch sw = Stopwatch.StartNew();
             Tracer.TaskManagerTrace.TraceEvent(TraceEventType.Information, 0, $"Начало RemoveTask: '{title}'");
-
-            if (string.IsNullOrWhiteSpace(title))
-            {
-                Tracer.TaskManagerTrace.TraceEvent(TraceEventType.Warning, 2, "Попытка удалить задачу с пустым названием.");
-                sw.Stop();
-                Tracer.TaskManagerTrace.TraceEvent(TraceEventType.Information, 1, $"Завершение RemoveTask (пустое название). Время: {sw.ElapsedMilliseconds} мс");
-                return false;
-            }
 
             var task = tasks.FirstOrDefault(t => t.Title == title);
             if (task != null)
