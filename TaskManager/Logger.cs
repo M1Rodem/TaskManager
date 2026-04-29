@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -25,35 +26,55 @@ namespace TaskManager
 
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.Console()
+                    .WriteTo.Console(new JsonFormatter())
                     .WriteTo.Logger(lc => lc
                         .Filter.ByIncludingOnly(ev => ev.Level == LogEventLevel.Debug)
                         .WriteTo.File(
-                            path: Path.Combine(_logDirectory, "log_DBG.log"),
-                            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message:lj}{NewLine}{Exception}",
+                            path: Path.Combine(_logDirectory, "log_DBG.json"),
+                            formatter: new JsonFormatter(),
+                            rollingInterval: RollingInterval.Day,
+                            fileSizeLimitBytes: 10_485_760,
+                            rollOnFileSizeLimit: true,
                             encoding: Encoding.UTF8
                         ))
                     .WriteTo.Logger(lc => lc
                         .Filter.ByIncludingOnly(ev => ev.Level == LogEventLevel.Information)
                         .WriteTo.File(
-                            path: Path.Combine(_logDirectory, "log_INF.log"),
-                            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message:lj}{NewLine}{Exception}",
+                            path: Path.Combine(_logDirectory, "log_INF.json"),
+                            formatter: new JsonFormatter(),
+                            rollingInterval: RollingInterval.Day,
+                            fileSizeLimitBytes: 10_485_760,
+                            rollOnFileSizeLimit: true,
                             encoding: Encoding.UTF8
                         ))
                     .WriteTo.Logger(lc => lc
                         .Filter.ByIncludingOnly(ev => ev.Level == LogEventLevel.Warning)
                         .WriteTo.File(
-                            path: Path.Combine(_logDirectory, "log_WRN.log"),
-                            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message:lj}{NewLine}{Exception}",
+                            path: Path.Combine(_logDirectory, "log_WRN.json"),
+                            formatter: new JsonFormatter(),
+                            rollingInterval: RollingInterval.Day,
+                            fileSizeLimitBytes: 10_485_760,
+                            rollOnFileSizeLimit: true,
                             encoding: Encoding.UTF8
                         ))
                     .WriteTo.Logger(lc => lc
                         .Filter.ByIncludingOnly(ev => ev.Level >= LogEventLevel.Error)
                         .WriteTo.File(
-                            path: Path.Combine(_logDirectory, "log_ERR.log"),
-                            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message:lj}{NewLine}{Exception}",
+                            path: Path.Combine(_logDirectory, "log_ERR.json"),
+                            formatter: new JsonFormatter(),
+                            rollingInterval: RollingInterval.Day,
+                            fileSizeLimitBytes: 10_485_760,
+                            rollOnFileSizeLimit: true,
                             encoding: Encoding.UTF8
                         ))
+                    .WriteTo.File(
+                        path: Path.Combine(_logDirectory, "taskmanager.log"),
+                        rollingInterval: RollingInterval.Day,
+                        fileSizeLimitBytes: 10_485_760,
+                        rollOnFileSizeLimit: true,
+                        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                        encoding: Encoding.UTF8
+                    )
                     .CreateLogger();
 
                 Tracer.TaskManagerTrace.Listeners.Clear();
@@ -76,6 +97,7 @@ namespace TaskManager
                 _initialized = true;
             }
         }
+        
         public static string GetLogDirectory()
         {
             return _logDirectory;

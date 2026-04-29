@@ -18,15 +18,15 @@ namespace TaskManager
 
             try
             {
-                // Инициализация логгера
                 var logger = new Logger();
                 var taskManager = new TaskManager();
 
-                Log.Information("=== TaskManager УСПЕШНО ЗАПУЩЕН ===");
-                Log.Information($"Директория логов: {Logger.GetLogDirectory()}");
+                Log.Information("=== TaskManager ЗАПУЩЕН ===");
+                Log.Information("Директория логов: {LogDirectory}", Logger.GetLogDirectory());
 
                 Console.WriteLine("=== TASK MANAGER ===");
                 Console.WriteLine($"Логи сохраняются в: {Logger.GetLogDirectory()}");
+                Console.WriteLine("Логи пишутся в JSON формате (структурированные)");
 
                 bool isRunning = true;
                 while (isRunning)
@@ -37,12 +37,11 @@ namespace TaskManager
                         Console.Write("Выберите действие (1-4): ");
 
                         string input = Console.ReadLine()?.Trim() ?? "";
-                        Log.Debug($"Пользователь ввел: {input}");
+                        Log.Debug("Пользовательский ввод: {UserInput}", input);
 
                         switch (input)
                         {
                             case "1":
-                                // Добавление задачи с обработкой ошибок
                                 ExceptionHandler.ExecuteWithHandling(
                                     "Добавление задачи",
                                     () => AddTask(taskManager)
@@ -50,7 +49,6 @@ namespace TaskManager
                                 break;
 
                             case "2":
-                                // Удаление задачи с обработкой ошибок
                                 ExceptionHandler.ExecuteWithHandling(
                                     "Удаление задачи",
                                     () => RemoveTask(taskManager)
@@ -58,7 +56,6 @@ namespace TaskManager
                                 break;
 
                             case "3":
-                                // Просмотр списка с обработкой ошибок
                                 ExceptionHandler.ExecuteWithHandling(
                                     "Просмотр списка задач",
                                     () => ListTasks(taskManager)
@@ -66,21 +63,22 @@ namespace TaskManager
                                 break;
 
                             case "4":
-                                Log.Information("Приложение завершает работу по запросу пользователя");
+                                Log.Information("Программа завершается по запросу пользователя");
                                 Console.WriteLine("Выход...");
                                 isRunning = false;
                                 break;
 
                             default:
                                 Console.WriteLine("Неверный выбор. Введите число от 1 до 4.");
-                                Log.Warning($"Неверный ввод в меню: {input}");
+                                Log.Warning("Неверный ввод в меню: {UserInput}", input);
                                 break;
                         }
                     }
                     catch (Exception ex)
                     {
                         ExceptionHandler.HandleException(ex, "Обработка команды меню", LogEventLevel.Error);
-                        Console.WriteLine("\nНажмите Enter для продолжения...");
+                        Console.WriteLine("\nПроизошла ошибка. Подробнее см. логи.");
+                        Console.WriteLine("Нажмите Enter для продолжения...");
                         Console.ReadLine();
                     }
 
@@ -89,14 +87,16 @@ namespace TaskManager
             }
             catch (Exception ex)
             {
-                // Критическая ошибка при инициализации
                 ExceptionHandler.HandleException(ex, "Инициализация приложения", LogEventLevel.Fatal);
-                Console.WriteLine("\nКритическая ошибка при запуске. Нажмите Enter для выхода...");
+                Console.WriteLine("\nКритическая ошибка при запуске. Подробнее см. логи.");
+                Console.WriteLine("Нажмите Enter для выхода...");
                 Console.ReadLine();
             }
             finally
             {
+                Log.Information("=== TaskManager ЗАВЕРШЕН ===");
                 Log.CloseAndFlush();
+                
                 Console.WriteLine("\nНажмите любую клавишу для выхода...");
                 Console.ReadKey();
             }
@@ -119,13 +119,11 @@ namespace TaskManager
             Console.Write("Введите название задачи: ");
             string title = Console.ReadLine()?.Trim() ?? "";
 
-            // Валидация теперь внутри TaskManager.AddTask
             taskManager.AddTask(title);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Задача '{title}' успешно добавлена.");
             Console.ResetColor();
-            Log.Information($"Задача '{title}' добавлена");
         }
 
         static void RemoveTask(TaskManager taskManager)
@@ -138,14 +136,12 @@ namespace TaskManager
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Задача '{title}' удалена.");
                 Console.ResetColor();
-                Log.Information($"Задача '{title}' удалена");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Задача '{title}' не найдена.");
                 Console.ResetColor();
-                Log.Warning($"Задача '{title}' не найдена для удаления");
             }
         }
 
@@ -156,7 +152,6 @@ namespace TaskManager
             if (tasks.Count == 0)
             {
                 Console.WriteLine("Список задач пуст.");
-                Log.Information("Список задач пуст");
             }
             else
             {
@@ -168,7 +163,6 @@ namespace TaskManager
                 }
                 Console.WriteLine("═══════════════════════════════");
                 Console.WriteLine($"Всего задач: {tasks.Count}");
-                Log.Information($"Выведено {tasks.Count} задач");
             }
         }
     }

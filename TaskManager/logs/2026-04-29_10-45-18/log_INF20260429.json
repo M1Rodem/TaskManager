@@ -1,0 +1,2 @@
+﻿{"Timestamp":"2026-04-29T10:45:18.3235066+03:00","Level":"Information","MessageTemplate":"=== TaskManager ЗАПУЩЕН ==="}
+{"Timestamp":"2026-04-29T10:45:18.3672374+03:00","Level":"Information","MessageTemplate":"Директория логов: {LogDirectory}","Properties":{"LogDirectory":"logs\\2026-04-29_10-45-18"}}

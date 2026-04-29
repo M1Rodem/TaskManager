@@ -164,7 +164,7 @@ namespace TaskManager
         /// <summary>
         /// Обёртка для безопасного выполнения операций (с возвратом значения)
         /// </summary>
-        public static T ExecuteWithHandling<T>(string operationName, Func<T> func, T defaultValue = default(T), LogEventLevel level = LogEventLevel.Error)
+        public static T ExecuteWithHandling<T>(string operationName, Func<T> func, T? defaultValue = default, LogEventLevel level = LogEventLevel.Error)
         {
             try
             {
@@ -176,8 +176,8 @@ namespace TaskManager
             catch (Exception ex)
             {
                 HandleException(ex, operationName, level);
-                return defaultValue;
+                return defaultValue!;
             }
-        }
+        }   
     }
 }
